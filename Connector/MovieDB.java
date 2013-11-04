@@ -16,7 +16,7 @@ public class MovieDB {
 	//Class constructor: initializes the DB connection using the specified Oracle DB. 
 	public MovieDB () {
 		System.out.println("Opening connection to Oracle DB...");
-		connector = new DBConnector("jdbc:oracle:thin:@localhost:1525:CRS", "thornhil", "Il0V3sUpR4s");
+		connector = new DBConnector("jdbc:oracle:thin:@localhost:1525:CRS", "UserName", "Password");
 		System.out.println("Connection has been opened successfully!");
 	}
 	
