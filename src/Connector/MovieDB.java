@@ -1,4 +1,4 @@
-
+package Connector;
 
 //This is a class that uses the DBConnector to create a movie database.
 
@@ -41,10 +41,6 @@ public class MovieDB {
 		connector.executeNonQuery("insert into movie values ('Movie 2',2)");
 		connector.executeNonQuery("insert into movie values ('Movie 3',3)");
 	}
-	
-	//This method queries all movies (in a string format to be displayed in the console)
-	public void queryAllMovies () {
-		System.out.println(connector.executeQueryAll("select * from movie"));
-	}
+
 	
 }

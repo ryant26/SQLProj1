@@ -1,3 +1,6 @@
+package Search;
+import  Connector.*;
+
 import java.sql.*;
 
 public class Search {
