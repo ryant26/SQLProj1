@@ -1,10 +1,11 @@
 import java.sql.*;
 import java.util.*;
+
 import Connector.*;
 import Prescription.*;
 
 public class mainInterface {
-	public static void main(String args[]) {
+	public static void main(String args[]) throws SQLException {
 		
 	Scanner user_input = new Scanner( System.in );
 	DBConnector con;
@@ -31,6 +32,7 @@ public class mainInterface {
 	
 	if (type.equals("1")) {
 		Prescription p = new Prescription(con);
+		p.createPrescription();
 		option = true;
 		user_input.close();
 	}
