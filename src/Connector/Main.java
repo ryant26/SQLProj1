@@ -7,7 +7,6 @@ public class Main {
 		MovieDB temp = new MovieDB();
 		temp.createDB();
 		temp.insertMovies();
-		temp.queryAllMovies();
 		temp.close();
 	}
 
