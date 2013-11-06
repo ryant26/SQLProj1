@@ -4,14 +4,14 @@ import java.sql.*;
 
 
 public class DBConnector {
-	
-	private Connection con; 
-	
+
+	private Connection con;
+
 	public DBConnector(String url, String user, String pass) {
 		String m_driverName = "oracle.jdbc.driver.OracleDriver";
 		try {
 			Class drvClass = Class.forName (m_driverName);
-			
+
 		} catch (ClassNotFoundException e) {
 			System.out.println("Driver unable to load");
 			e.printStackTrace();
@@ -23,10 +23,10 @@ public class DBConnector {
 			e.printStackTrace();
 		}
 	}
-	
+
     public void closeConnection () {
         try {
-                con.close(); 
+                con.close();
         }
         catch (Exception e) {
                 e.printStackTrace();
@@ -59,4 +59,14 @@ public ResultSet executeQuery(String query)  {
         }
         return null;
 }
+public DatabaseMetaData getMetaData(){
+    DatabaseMetaData db = null;
+    try{
+        return con.getMetaData();
+    }catch (Exception e){
+        e.printStackTrace();
+    }
+    return db;
+}
+
 }
