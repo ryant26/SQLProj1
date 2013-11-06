@@ -3,6 +3,10 @@ import  Connector.*;
 import java.util.regex.*;
 import java.sql.*;
 
+/* -----------------IMPORTANT NOTES-------------------
+* alarming age method always tries to remove the view before creating it. This throws an exception that
+* seems I am not able to handle. Possibly need a rework. Also, this method is EXTREMELY fragile, DO NOT TOUCH.
+ */
 
 public class Search extends SearchCon{
 
@@ -60,6 +64,10 @@ public class Search extends SearchCon{
     }
 
     public void searchAlarmAge(String testTypeName){
+        /*
+            ------------------------------WARNING---------------------------------------
+                    THIS METHOD IS EXTREMELY FRAGILE, DO NOT TOUCH!!!!!
+         */
 
         try{
             connection.executeQuery("DROP VIEW medical_risk");

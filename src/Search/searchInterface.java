@@ -29,7 +29,15 @@ public class searchInterface{
             Scanner reader = new Scanner(System.in);
             System.out.print("Enter your selection:  ");
             String input = reader.nextLine();
-            int inputNumber = Integer.parseInt(input);
+            int inputNumber = 0;
+            try{
+                inputNumber = Integer.parseInt(input);
+            }catch (Exception e){
+                System.out.println();
+                System.out.println("Invalid Selection");
+                System.out.println();
+                continue;
+            }
             switch (inputNumber){
                 case 1:
                     this.optionOne();
@@ -44,7 +52,9 @@ public class searchInterface{
                     exit = true;
                     break;
                 default:
+                    System.out.println();
                     System.out.println("Invalid Selection");
+                    System.out.println();
                     break;
             }
         }
