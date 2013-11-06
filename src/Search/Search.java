@@ -2,6 +2,7 @@ package Search;
 import  Connector.*;
 import java.util.regex.*;
 import java.sql.*;
+import Utilities.RPrinter;
 
 /* -----------------IMPORTANT NOTES-------------------
 * alarming age method always tries to remove the view before creating it. This throws an exception that
@@ -9,6 +10,7 @@ import java.sql.*;
  */
 
 public class Search extends SearchCon{
+    public RPrinter printer = new RPrinter();
 
     public Search(DBConnector conn){
         super(conn);
@@ -27,7 +29,7 @@ public class Search extends SearchCon{
                         +" where p1.health_care_no = "+searchString
                         +" and p1.health_care_no = tr.patient_no"
                         +" and tr.type_id = t1.type_id");
-                printResults(rs, "name", "health_care_no", "test_name", "test_date", "result");
+                this.printer.printResults(rs, "name", "health_care_no", "test_name", "test_date", "result");
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -40,7 +42,7 @@ public class Search extends SearchCon{
                         +" where p1.name like"+"'%"+searchString+"%'"
                         +" and p1.health_care_no = tr.patient_no"
                         +" and tr.type_id = t1.type_id");
-                printResults(rs, "name", "health_care_no", "test_name", "test_date", "result");
+                this.printer.printResults(rs, "name", "health_care_no", "test_name", "test_date", "result");
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -57,7 +59,7 @@ public class Search extends SearchCon{
                             +" and tr.prescribe_date <= to_date('"+eDate+"', 'dd-mon-yyyy')"
                             +" and p1.health_care_no = tr.patient_no"
                             +" and tr.type_id = t1.type_id");
-            printResults(rs, "name", "health_care_no", "test_name", "prescribe_date", "employee_no");
+            this.printer.printResults(rs, "name", "health_care_no", "test_name", "prescribe_date", "employee_no");
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -117,55 +119,9 @@ public class Search extends SearchCon{
                     "                               )"+
                     " AND m.medical_type = tt.type_id"+
                     " AND tt.test_name like"+"'%"+testTypeName+"%'");
-            printResults(rs, "health_care_no", "address", "phone");
+            this.printer.printResults(rs, "health_care_no", "address", "phone");
         }catch (Exception e){
             e.printStackTrace();
         }
     }
-
-    private void printResults(ResultSet rs, String ... argList){
-        //Variables we need
-        String title = "";
-        String underline = "";
-        int tabCounter = 0;
-
-        String wholeLine = "";
-
-        //Start Printing the result set
-        try{
-            while (rs.next()){
-                for (String i : argList){
-                    String result = rs.getString(i);
-                    wholeLine += (result + String.format("%"+5+"s", ""));
-                }
-                wholeLine += "\n\n";
-
-            }
-            if (wholeLine.length() == 0){
-                System.out.println("No results match your query!");
-                System.out.println("\n\n");
-                return;
-            }
-        }catch(Exception e){
-            e.printStackTrace();
-            return;
-        }
-
-        //Get the title, and print it out with an underline
-        for (String i : argList){
-            title += i + String.format("%"+5+"s", "");
-        }
-
-        for (int i = 0; i<title.length(); i++){
-            underline += "-";
-        }
-        System.out.println("\n\n");
-        System.out.println("Results in the following format:");
-        System.out.println(title);
-        System.out.println(underline);
-        System.out.println(wholeLine);
-        System.out.println("\n\n");
-
-    }
-
 }

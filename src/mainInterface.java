@@ -52,6 +52,7 @@ public class mainInterface {
         * we want to start at the top of the loop
         * */
 		searchInterface SI = new searchInterface(con);
+        SI.mainLoop();
         continue;
 	}
 	else if (type.equals("5")) {
