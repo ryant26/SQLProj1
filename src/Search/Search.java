@@ -135,6 +135,7 @@ public class Search extends SearchCon{
             }
             if (wholeLine.length() == 0){
                 System.out.println("No results match your query!");
+                System.out.println("\n\n");
                 return;
             }
         }catch(Exception e){
@@ -150,10 +151,12 @@ public class Search extends SearchCon{
         for (int i = 0; i<title.length(); i++){
             underline += "-";
         }
+        System.out.println("\n\n");
         System.out.println("Results in the following format:");
         System.out.println(title);
         System.out.println(underline);
         System.out.println(wholeLine);
+        System.out.println("\n\n");
 
     }
 
