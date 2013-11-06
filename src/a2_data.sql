@@ -29,7 +29,7 @@ insert into can_conduct values('X-Ray Laboritories', 2);
 insert into can_conduct values('House of Surgeons', 3);
 insert into can_conduct values('House of Surgeons', 2);
 insert into can_conduct values('Prarie Med Lab', 1);
-insert into can_conduct values('Prarie Med Lab', 2);
+insert into  can_conduct values('Prarie Med Lab', 2);
 insert into can_conduct values('Prarie Med Lab', 3);
 insert into can_conduct values('Oilers Lab', 3);
 insert into can_conduct values('Oilers Lab', 1);
