@@ -15,54 +15,48 @@ public class Prescription {
 		conn = con;
 	}
 	public void createPrescription() throws SQLException {
-		Statement stmt = null;
+		int id_of_test = -1;
+		ResultSet test_rs = null;
 		Scanner user_input = new Scanner( System.in );
 		user_input.useDelimiter(System.getProperty("line.separator"));
 		
-		System.out.print("Employee Number or Name of Doctor:");
-		String doctor_name = null;
-		String patient_name = null;
+		System.out.print("Employee Number of Doctor:");
 		String doctor_id = user_input.next();
-		System.out.println(doctor_id);
-		
-		Pattern p = Pattern.compile("[a-zA-Z]");
-        Matcher m = p.matcher(doctor_id);
-		if (m.find()) {
-			doctor_name = doctor_id;
-		}
-		
+		boolean t = true;
+		while(t) {
 		System.out.println("Name of test:");
 		String test_name = user_input.next();
-		ResultSet test_rs = this.conn.executeQuery("Select t.type_id "
-				+ " From test_type t "
-				+ " Where t.test_name LIKE 'X Ray'");
-		ResultSetMetaData	rsetMetaData	=	test_rs.getMetaData();
-		System.out.println(rsetMetaData.getColumnName(1));
-		Object o	=	test_rs.getObject(1);
-		System.out.println(o.toString());
+		
+		test_rs = this.conn.executeQuery("Select t.type_id "
+			+ " From test_type t "
+			+ " Where t.test_name LIKE '"+test_name+"'");
+		
 		try {
 			if (!test_rs.next()) {
 				System.out.println("Invalid test name, please try again");
+			}
+			else {
+				t = false;
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		System.out.println("Patient name or number:");
-		String patient_id = user_input.next();
-		
-		Matcher m2 = p.matcher(patient_id);
-		if (m2.find()) {
-			patient_name = patient_id;
 		}
+		//printResults(test_rs, "type_id");
 		
-		user_input.close();
+		
+		System.out.println("Patient health care number:");
+		String patient_id = user_input.next();
 
-		ResultSet rs = this.conn.executeQuery("Select n.health_care_no, n.type_id"
-				+ " from not_allowed n"
-				+ " where n.type_id = test_name and n.health_care_no = patient_id");
+		user_input.close();
+		
+		ResultSet rs = this.conn.executeQuery("SELECT UNIQUE n.health_care_no, n.test_id"
+				+ " FROM not_allowed n"
+				+ " INNER JOIN test_type t"
+				+ " ON "+test_rs.getNString("type_id")+"= n.test_id"
+				+ " INNER JOIN patient p"
+				+ " ON n.health_care_no ="+patient_id);
 		try {
 			if (rs.next()) {
 				System.out.println("This combination is not allowed, please try again");
@@ -71,7 +65,31 @@ public class Prescription {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(rs);
+		
+		Random rand = new Random();
+		
+		while (id_of_test == -1){
+		id_of_test = rand.nextInt(50);
+		ResultSet rs2 = this.conn.executeQuery("SELECT test_id from test_record"
+				+ " where test_id = "+id_of_test);
+		if (rs2.next()) {
+			//failed to generate proper test ID
+			System.out.println("Trial test ID is "+id_of_test);
+			id_of_test = -1;
+		}
+		}
+		System.out.println("Proper ID of test is "+id_of_test);
+		String temp = test_rs.getNString("type_id");
+		System.out.println("Temp is "+temp);
+		String sql = "INSERT INTO test_record" + 
+					" VALUES ("+id_of_test+", "+test_rs.getNString("type_id")+""
+							+", "+patient_id+" , "+doctor_id+", null,"
+								+"	null,null,null )";
+		boolean insert = this.conn.executeNonQuery(sql);
+		System.out.println(""+insert+": Record was stored in database");
+		
+
+		
 	}
 	
 
