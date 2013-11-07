@@ -29,7 +29,6 @@ public class mainInterface {
 	System.out.println("(5) Exit");
 
 	String type = user_input.next();
-	System.out.println(type);
 
 	if (type.equals("1")) {
 		Prescription p = new Prescription(con);
@@ -52,6 +51,7 @@ public class mainInterface {
         * we want to start at the top of the loop
         * */
 		searchInterface SI = new searchInterface(con);
+		SI.mainLoop();
         continue;
 	}
 	else if (type.equals("5")) {
