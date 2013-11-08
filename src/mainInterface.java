@@ -52,6 +52,7 @@ public class mainInterface {
 	}
 	else if (type.equals("5")) {
 		option = true;
+		con.closeConnection();
 
 	}
 	else {
