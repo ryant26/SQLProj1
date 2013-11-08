@@ -5,7 +5,7 @@ import java.sql.*;
 public class DBConnector {
 	private Connection con;
 
-    public DBConnector(String url, String user, String pass) {
+    public DBConnector(String url, String user, String pass) throws SQLException{
             String m_driverName = "oracle.jdbc.driver.OracleDriver";
             try {
                     Class drvClass = Class.forName (m_driverName);
@@ -17,8 +17,8 @@ public class DBConnector {
             try {
                     con = DriverManager.getConnection(url, user, pass);
             } catch (SQLException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
+		System.out.println("Invalid username/password combination. Please try again.");
+                    throw new SQLException();
             }
     }
 

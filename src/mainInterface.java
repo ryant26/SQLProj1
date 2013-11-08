@@ -11,15 +11,24 @@ public class mainInterface {
 	public static void main(String args[]) throws SQLException {
 
 	Scanner user_input = new Scanner( System.in );
-	DBConnector con;
+	DBConnector con = null;
+	
+	boolean condition = true;
+	while(condition) {
 	System.out.print("User name: ");
 	String m_username = user_input.next();
 	System.out.println(" ");
 	System.out.print("Password: ");
 	String m_password = user_input.next();
+	try {
 
-	con = new DBConnector("jdbc:oracle:thin:@localhost:1525:CRS", m_username, m_password);
-
+	con = new DBConnector("jdbc:oracle:thin:@gwynne.cs.ualberta.ca:1521:CRS", m_username, m_password);
+	} catch (Exception e){
+	
+	continue;
+	}
+	break;
+	}
 	boolean option = false;
 	while (option != true) {
 
