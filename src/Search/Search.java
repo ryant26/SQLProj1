@@ -62,10 +62,6 @@ public class Search extends SearchCon{
     }
 
     public void searchAlarmAge(String testTypeName){
-        /*
-            ------------------------------WARNING---------------------------------------
-                    THIS METHOD IS EXTREMELY FRAGILE, DO NOT TOUCH!!!!!
-         */
 
         try{
             DatabaseMetaData md = connection.getMetaData();

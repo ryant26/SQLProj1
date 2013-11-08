@@ -3,13 +3,13 @@ package Connector;
 import java.sql.*;
 
 public class DBConnector {
-	private Connection con; 
-    
+	private Connection con;
+
     public DBConnector(String url, String user, String pass) {
             String m_driverName = "oracle.jdbc.driver.OracleDriver";
             try {
                     Class drvClass = Class.forName (m_driverName);
-                    
+
             } catch (ClassNotFoundException e) {
                     System.out.println("Driver unable to load");
                     e.printStackTrace();
@@ -21,10 +21,10 @@ public class DBConnector {
                     e.printStackTrace();
             }
     }
-    
+
 public void closeConnection () {
     try {
-            con.close(); 
+            con.close();
     }
     catch (Exception e) {
             e.printStackTrace();
@@ -58,14 +58,24 @@ public ResultSet executeQuery(String query)  {
     return null;
 }
 
-public Statement createStatement(int first, int second){
-	 Statement stmt = null;
-	try {
-		stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-	} catch (SQLException e) {
+    public Statement createStatement(int first, int second){
+         Statement stmt = null;
+        try {
+            stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        } catch (SQLException e) {
 
-		e.printStackTrace();
-	}
-	 return stmt;
-}
+            e.printStackTrace();
+        }
+         return stmt;
+    }
+
+    public DatabaseMetaData getMetaData(){
+        DatabaseMetaData md = null;
+        try{
+            md = con.getMetaData();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return md;
+    }
 }
