@@ -46,7 +46,7 @@ public class Prescription {
 
 		//generate new random testID that is not already used
 		while (id_of_test == -1){
-		id_of_test = rand.nextInt(1000);
+		id_of_test = rand.nextInt(100000);
 		ResultSet rs2 = this.conn.executeQuery("SELECT test_id from test_record"
 				+ " where test_id = "+id_of_test);
 		if (rs2.next()) {
@@ -75,6 +75,7 @@ public class Prescription {
 		ResultSet full_testrecord = this.conn.executeQuery("SELECT test_id, type_id, patient_no, employee_no, prescribe_date FROM test_record ORDER BY test_id");
 		RPrinter r = new RPrinter();
 		r.printResults(full_testrecord, "test_id", "type_id", "patient_no", "employee_no", "prescribe_date");
+		this.conn.executeQuery("COMMIT");
 
 		}
 
@@ -192,10 +193,10 @@ public class Prescription {
 	public boolean is_not_allowed(ResultSet test_rs, String patient_id) throws SQLException {
 		//method will indicate if this patient-test combination is allowed
 
-		ResultSet rs = this.conn.executeQuery("SELECT UNIQUE n.health_care_no, n.test_id"
+		ResultSet rs = this.conn.executeQuery("SELECT UNIQUE n.health_care_no, n.type_id"
 				+ " FROM not_allowed n"
 				+ " INNER JOIN test_type t"
-				+ " ON "+test_rs.getString("type_id")+"= n.test_id"
+				+ " ON "+test_rs.getString("type_id")+"= n.type_id"
 				+ " INNER JOIN patient p"
 				+ " ON n.health_care_no ="+patient_id);
 
