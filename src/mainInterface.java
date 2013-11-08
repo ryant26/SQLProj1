@@ -2,6 +2,8 @@ import java.sql.*;
 import java.util.*;
 
 import Connector.*;
+import Med_test.Med_test;
+import Patient_Info.Patient_Info;
 import Prescription.*;
 import Search.*;
 
@@ -35,10 +37,12 @@ public class mainInterface {
 		p.createPrescription();
 	}
 	else if (type.equals("2")) {
-		//user_input.close();
+        Med_test mt = new Med_test();
+        mt.mainLoop(con);
 	}
 	else if (type.equals("3")) {
-		//user_input.close();
+        Patient_Info pi = new Patient_Info();
+        pi.mainLoop(con);
 	}
 	else if (type.equals("4")) {
         /*
