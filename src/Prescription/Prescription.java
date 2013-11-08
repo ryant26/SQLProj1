@@ -66,13 +66,13 @@ public class Prescription {
 
 		//prepare insert statement to create record
 		String sql = "INSERT INTO test_record" + 
-					" VALUES ("+id_of_test+", "+test_rs.getNString("type_id")+""
+					" VALUES ("+id_of_test+", "+test_rs.getString("type_id")+""
 							+", "+patient_id+" , "+doctor_id+", null,"
-								+"	null, '"+date+"' ,null )";
+								+"	null, DATE '"+date+"' ,null )";
 		this.conn.executeNonQuery(sql);
 
 		//display full test_record set
-		ResultSet full_testrecord = this.conn.executeQuery("SELECT * FROM test_record");
+		ResultSet full_testrecord = this.conn.executeQuery("SELECT test_id, type_id, patient_no, employee_no FROM test_record ORDER BY test_id");
 		RPrinter r = new RPrinter();
 		r.printResults(full_testrecord, "test_id", "type_id", "patient_no", "employee_no", "medical_lab",
 				"result", "prescribe_date", "test_date");
@@ -196,7 +196,7 @@ public class Prescription {
 		ResultSet rs = this.conn.executeQuery("SELECT UNIQUE n.health_care_no, n.test_id"
 				+ " FROM not_allowed n"
 				+ " INNER JOIN test_type t"
-				+ " ON "+test_rs.getNString("type_id")+"= n.test_id"
+				+ " ON "+test_rs.getString("type_id")+"= n.test_id"
 				+ " INNER JOIN patient p"
 				+ " ON n.health_care_no ="+patient_id);
 
