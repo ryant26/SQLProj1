@@ -18,7 +18,7 @@ public class mainInterface {
 
 	Scanner user_input = new Scanner( System.in );
 	DBConnector con = null;
-	
+
 	boolean condition = true;
 	while(condition) {
 	System.out.print("User name: ");
@@ -28,9 +28,9 @@ public class mainInterface {
 	String m_password = user_input.next();
 	try {
 
-	con = new DBConnector("jdbc:oracle:thin:@gwynne.cs.ualberta.ca:1521:CRS", m_username, m_password);
+	con = new DBConnector("jdbc:oracle:thin:@localhost:1525:CRS", m_username, m_password);
 	} catch (Exception e){
-	
+
 	continue;
 	}
 	break;
