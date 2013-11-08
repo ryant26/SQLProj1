@@ -1,4 +1,3 @@
-package Med_test;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -13,9 +12,9 @@ import Connector.DBConnector;
 public class Med_test {
 	 private Scanner scan = new Scanner(System.in);
      public Med_test(){
-             
+
      }
-     
+
      public void mainLoop(DBConnector conn){
     	 //This is the mainLoop of the program, where all the sub functions are called and where some basic checks are run
              scan.useDelimiter(System.getProperty("line.separator"));
@@ -23,10 +22,10 @@ public class Med_test {
              int num_rows = printResults(rs,"test_id", "Patient", "Doctor", "Test", "Date_Prescribed");
              String test_id = null;
              String type_id = null;
-             
+
              if(num_rows>1){
                      System.out.println("Please enter the test ID you wish to update: ");
-                     
+
                      test_id = scan.next();
                      type_id = Get_test(test_id, conn);
                      Update_Record(test_id, type_id, conn);
@@ -46,17 +45,17 @@ public class Med_test {
                      Update_Record(test_id, type_id, conn);
              }
      }
-     
+
      private ResultSet Find_Record(DBConnector conn){
     	 //This function is used to get the patient and doctor info which are used in the querys to return all test records that match
              System.out.println("Please Enter the Patient's Name or Health Care Number: ");
              String Id_name_p = scan.next();
              String check_p = ID_Check(Id_name_p);
-             
+
              System.out.println("Please Enter the Prescribing Doctor's name or Employee Number: ");
              String Id_name_d = scan.next();
              String check_d = ID_Check(Id_name_d);
-             
+
              ResultSet rs = null;
              Statement stmt = null;
              stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -121,11 +120,11 @@ public class Med_test {
                  e.printStackTrace();
              }
              }
-             
+
              return rs;//This will be only one Row as the specific row will be chosen by user
-             
+
      }
-     
+
      private void Update_Record(String test_id, String type_id, DBConnector conn){
     	 //This is the function where the update is run, it asks the user for the lab and result of the test, the test date is set as the current date
              System.out.println("Please enter the name of the Medical Lab these\n are being performed at: ");
@@ -135,7 +134,7 @@ public class Med_test {
              if(check.equals("Valid") && check2.equals("Valid") ){
                              System.out.println("Please enter the result of the test performed: ");
                              String res = scan.next();
-             
+
                              DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
                              Date today = new Date();
                              String date = dateFormat.format(today);
@@ -154,14 +153,14 @@ public class Med_test {
                                      e.printStackTrace();
                              }
                      }
-             
+
              else{
             	 System.out.println("Invalid Lab Name");
                  Update_Record(test_id, type_id, conn);
              }
      }
-     
-     
+
+
      private String Check_Lab(String Check, DBConnector conn){
     	 //This function checks if the lab is lab within the database
              ResultSet rs = null;
@@ -173,7 +172,7 @@ public class Med_test {
                          +" FROM medical_lab "
                          +" WHERE lab_name= '"+Check
                          +"'");
-         
+
              }catch (Exception e){
             	 e.printStackTrace();
              }
@@ -189,7 +188,7 @@ public class Med_test {
                      return "Invalid Data";
              }
      }
-     
+
      private String Get_test(String test_id, DBConnector conn){
     	 //This function finds the type Id of the test record we are updating
              ResultSet rs = null;
@@ -202,7 +201,7 @@ public class Med_test {
                          +" FROM test_record "
                          +" WHERE test_id= '"+test_id
                          +"'");
-         
+
              }catch (Exception e){
             	 e.printStackTrace();
              }
@@ -214,7 +213,7 @@ public class Med_test {
              }
              return type_id;
      }
-     
+
      private String Check_Test(String type_id, String lab_name, DBConnector conn){
     	 //This function checks if the lab that the user has entered can perform the test that is being executed
              ResultSet rs = null;
@@ -224,10 +223,10 @@ public class Med_test {
             	 rs = stmt.executeQuery(
                          "SELECT * "
                          +" FROM can_conduct "
-                         +" WHERE lab_name= '"+lab_name
+                         +" WHERE lab_name = '"+lab_name
                          +"' AND type_id= '"+type_id
                          +"'");
-         
+
              }catch (Exception e){
             	 e.printStackTrace();
              }
@@ -255,10 +254,10 @@ public class Med_test {
          else if(m2.matches()){
          	return "Name";
          }
-         
+
  		return "Invalid";
  	}
-     
+
      private int printResults(ResultSet rs, String ... argList){
     	 //This function is similar to the RPrinter class but slightly altered to work better for Med_test
              try {
@@ -309,5 +308,5 @@ public class Med_test {
      System.out.println("\n\n");
      return num_rows;
  }
-     
+
 }
