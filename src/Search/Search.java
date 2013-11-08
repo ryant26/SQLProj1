@@ -4,10 +4,6 @@ import java.util.regex.*;
 import java.sql.*;
 import Utilities.RPrinter;
 
-/* -----------------IMPORTANT NOTES-------------------
-* alarming age method always tries to remove the view before creating it. This throws an exception that
-* seems I am not able to handle. Possibly need a rework. Also, this method is EXTREMELY fragile, DO NOT TOUCH.
- */
 
 public class Search extends SearchCon{
     public RPrinter printer = new RPrinter();

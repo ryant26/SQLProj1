@@ -17,7 +17,7 @@ public class RPrinter {
 
         String wholeLine = "";
 
-        //Start Printing the result set
+        //Start Printing the result set into a string
         try{
             while (rs.next()){
                 for (String i : argList){
@@ -26,7 +26,7 @@ public class RPrinter {
                 }
                 wholeLine += "\n\n";
 
-            }
+            }//Check if the result String is empty
             if (wholeLine.length() == 0){
                 System.out.println("No results match your query!");
                 System.out.println("\n\n");
@@ -44,7 +44,7 @@ public class RPrinter {
 
         for (int i = 0; i<title.length(); i++){
             underline += "-";
-        }
+        }//Print everything to the screen
         System.out.println("\n\n");
         System.out.println("Results in the following format:");
         System.out.println(title);
