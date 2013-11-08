@@ -7,6 +7,12 @@ import Patient_Info.Patient_Info;
 import Prescription.*;
 import Search.*;
 
+//CMPUT 291 Project 1
+//////////////////////////
+//Ryan Thornhill (1304096)
+//Cody Otto (1290907)
+//Brittany Lamorie (1257383)
+///////////////////////////
 public class mainInterface {
 	public static void main(String args[]) throws SQLException {
 

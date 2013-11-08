@@ -363,11 +363,6 @@ public class Patient_Info {
     }
     
     private int printResults(ResultSet rs, String ... argList){
-            try {
-                    rs.beforeFirst();
-            } catch (SQLException e1) {
-                    e1.printStackTrace();
-            }
             //Variables we need
             String title = "";
             String underline = "";

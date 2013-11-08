@@ -28,9 +28,15 @@ public class Med_test {
                      System.out.println("Please enter the test ID you wish to update: ");
                      
                      test_id = scan.next();
-			
-                     type_id = Get_test(test_id, conn);
-                     Update_Record(test_id, type_id, conn);
+		     String check = ID_Check(test_id);
+		     if(check.equals("ID")){
+                     	type_id = Get_test(test_id, conn);
+                     	Update_Record(test_id, type_id, conn);
+		     }
+		     else{
+			System.out.println("Invalid Input");
+		        mainLoop(conn);
+		     }
              }
              else if(num_rows == 0){
                      System.out.println("There is no prescription currently in the system with those values\n Please try again: ");
@@ -101,8 +107,8 @@ public class Med_test {
                                  +" AND p.health_care_no = " +Id_name_p
                                  +" AND d.employee_no = "+Id_name_d
                                  +" ANd tr.employee_no = d.employee_no"
-                                 +" AND p1.health_care_no = d.health_care_no");
-                                 //+" AND tt.type_id = tr.type_id");
+                                 +" AND p1.health_care_no = d.health_care_no"
+                                 +" AND tt.type_id = tr.type_id");
                      }catch (Exception e){
                     	 e.printStackTrace();
                      }
@@ -266,11 +272,6 @@ public class Med_test {
      
      private int printResults(ResultSet rs, String ... argList){
     	 //This function is similar to the RPrinter class but slightly altered to work better for Med_test
-             try {
-                     rs.first();
-             } catch (SQLException e1) {
-                     e1.printStackTrace();
-             }
      //Variables we need
      String title = "";
      String underline = "";
