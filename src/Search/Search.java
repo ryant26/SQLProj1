@@ -72,12 +72,16 @@ public class Search extends SearchCon{
          */
 
         try{
-            connection.executeQuery("DROP VIEW medical_risk");
+            DatabaseMetaData md = connection.getMetaData();
+            ResultSet rs1 = md.getTables(null, null, "MEDICAL_RISK", null);
+            if (rs1.next()){
+                connection.executeQuery("drop table MEDICAL_RISK");
+            }
         }catch (Exception e){
-            System.out.print("TAble ddoesnt exit");
+            e.printStackTrace();
         }
         try{
-        connection.executeQuery("CREATE VIEW medical_risk(medical_type,alarming_age,abnormal_rate) AS\n" +
+        connection.executeQuery("CREATE TABLE medical_risk(medical_type,alarming_age,abnormal_rate) AS\n" +
                 "SELECT c1.type_id,min(c1.age),ab_rate\n" +
                 "FROM  \n" +
                 "      -- Find the abnormal rate for each test type\n" +
@@ -107,7 +111,7 @@ public class Search extends SearchCon{
                 "       AND c1.ab_cnt/c2.cnt>=2*r.ab_rate\n" +
                 "GROUP BY c1.type_id,ab_rate");
         }catch (Exception e){
-            e.printStackTrace();
+            //e.printStackTrace();
         }try{
             ResultSet rs = connection.executeQuery("SELECT DISTINCT health_care_no, address, phone\n" +
                     "FROM   patient p, medical_risk m, test_type tt\n" +
